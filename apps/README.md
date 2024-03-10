@@ -2,23 +2,24 @@ https://spark.apache.org/docs/latest/tuning.html
 
 ### empacotamento 
 
-#### (OBSOLETO) empacotar as lib usadas do virtualenv com ven-pack
-venv-pack -o pyspark_venv.tar.gz
+Alinhar o interpretador python local do venv com o usado pelo spark
+
+no caso, usando Ubuntu 22.04 com python python3.10 do sistema
 
 #### empacotar com pex
 - https://github.com/pex-tool/pex
 - https://medium.com/criteo-engineering/packaging-code-with-pex-a-pyspark-example-9057f9f144f3
 
-pex $(pip freeze) -o venv_app01.pex
+pex $(pip freeze) -o app.pex
 
 
 ### submeter para spark
  https://spark.apache.org/docs/latest/submitting-applications.html
 #### execução como client remoto
-spark-submit app01/main.py
+spark-submit main.py
 
 #### execução no cluster 
-spark-submit --master spark://192.168.2.5:7077 app01/main.py
+spark-submit --master spark://192.168.2.5:7077 main.py
 
 ## Provisioning 
 https://medium.com/@swethamurali03/apache-spark-executors-cba87f3de78d#:~:text=Executors%20are%20responsible%20for%20actually,node%20can%20have%20multiple%20executors.

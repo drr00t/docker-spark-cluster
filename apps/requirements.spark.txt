@@ -2,7 +2,7 @@ py4j==0.10.9.7
 pandas==2.1.2
 pyarrow==15.0.0
 numpy==1.26.4
-venv-pack==0.2.0
+pex==2.2.2
 grpcio-status==1.62.0
 googleapis-common-protos==1.62.0
 pyspark[sql]==3.5.1

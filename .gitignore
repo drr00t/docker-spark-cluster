@@ -10,3 +10,5 @@
 .idea/
 
 *.pex
+
+jars/*.jar
