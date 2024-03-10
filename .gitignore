@@ -1,12 +1,10 @@
 # Ignore data files
 *.csv
 
-.pyspark_apps_venv/
-
 .venv/
 
 .idea/
 
 *.pex
 
-#jars/*.jar
+packages/jars/*.jar
