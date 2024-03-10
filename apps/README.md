@@ -12,6 +12,27 @@ no caso, usando Ubuntu 22.04 com python python3.10 do sistema
 
 pex $(pip freeze) -o app.pex
 
+#### empacotar app multi arquivos
+
+#### estrutura da app
+
+01_multfiles_app (root do app)
+
+```console
+.
+├── app
+│   ├── infra
+│   ├── multfilesapp.py
+├── app.pex
+├── app.zip
+├── main.py
+├── pyproject.toml
+├── requirements.dev.txt
+└── requirements.txt
+```
+
+# comprime 
+zip -r  app.zip app/
 
 ### submeter para spark
  https://spark.apache.org/docs/latest/submitting-applications.html
@@ -20,6 +41,9 @@ spark-submit main.py
 
 #### execução no cluster 
 spark-submit --master spark://192.168.2.5:7077 main.py
+
+#### execução de uma app mult arquivos
+spark-submit --py-files app.zip main.py
 
 ## Provisioning 
 https://medium.com/@swethamurali03/apache-spark-executors-cba87f3de78d#:~:text=Executors%20are%20responsible%20for%20actually,node%20can%20have%20multiple%20executors.

@@ -8,23 +8,18 @@ import os
 import pandas as pd
 from pyspark.sql import Row
 
-from apps.app02_hosting.infra.baseapp import BaseApplication
-
-os.environ['PYSPARK_PYTHON'] = "./environment/bin/python"
+from app.infra.baseapp import BaseApplication
 
 
-class SparkApplication(BaseApplication[SparkSession]):
-  # _spk_session: SparkSession
-  # _spk_context:  SparkContext
+class SparkApplication(BaseApplication):
   _spk_builder:  SparkSession.Builder
 
-  def __init__(self)-> None:
-    builder = SparkSession.builder\
-       .appName("app-01")  #.appName(self.app_name)
+  def __init__(self, name:str)-> None:
+    self._spk_builder = SparkSession.builder.appName(name)  #.appName(self.app_name)
     
     # if self.master:
     #     builder.master(self.master)
-    builder.master("spark://localhost:7077")
+    # builder.master("spark://localhost:7077")
 
     # if self.enable_hive_support:
     #     builder.enableHiveSupport()
@@ -32,14 +27,15 @@ class SparkApplication(BaseApplication[SparkSession]):
     # if self.config:
     #     for key, value in self.config.items():
     #         builder.config(key, value)
-    builder \
-      .config("spark.jars", "/opt/spark-apps/postgresql-42.2.22.jar") \
+    self._spk_builder \
       .config("spark.sql.execution.arrow.pyspark.enabled", "true") \
-      .config("spark.archives","pyspark_venv.tar.gz#environment")
+      .config("spark.executorEnv.PEX_ROOT","./app.pex") \
+      .config("spark.files", "app.pex") \
+      .config("spark.sql.session.timeZone", "UTC")
 
   def start(self)-> None:
-    session: SparkSession = self._builder.getOrCreate()
-    context: SparkContext = self._spk_session.sparkContext
+    session: SparkSession = self._spk_builder.getOrCreate()
+    context: SparkContext = session.sparkContext
     
     context.setLogLevel('WARN')
 
