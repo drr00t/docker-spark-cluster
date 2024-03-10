@@ -1,4 +1,13 @@
-FROM apache/spark:3.5.1-python3
+FROM apache/spark:3.5.1-scala2.12-java17-ubuntu
+
+USER root
+
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y python3.10 python3-pip; \
+    rm -rf /var/lib/apt/lists/*
+
+USER spark
 
 WORKDIR /opt/spark
 
