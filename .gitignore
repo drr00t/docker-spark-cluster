@@ -8,3 +8,5 @@
 *.pex
 
 packages/jars/*.jar
+
+__pycache__
