@@ -1,11 +1,13 @@
 from typing import List
 from datetime import datetime, date
+import os
 import pytest
 from pyspark.sql import SparkSession
 from pyspark.sql import Row
 from pyspark.sql import SparkSession, DataFrame, Row
 from pyspark.testing.utils import assertDataFrameEqual
 
+os.environ['PYARROW_IGNORE_TIMEZONE'] = '1'
 
 @pytest.fixture
 def get_spark_session():
@@ -21,7 +23,9 @@ def get_data():
         Row(a=4, b=5., c='string3', d=date(2000, 3, 1), e=datetime(2000, 1, 3, 12, 0))
     ]
 
-
+def test_session_created(get_spark_session: SparkSession):
+    assert get_spark_session is not None 
+                              
 def test_dataframe_created_ok(get_spark_session: SparkSession, get_data: List[Row]):
     df: DataFrame = get_spark_session.createDataFrame(get_data,
                                                       schema='a long, b double, c string, d date, e timestamp')
